@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+.wrongAnswer {
+  background-color: cornsilk;
+  color: red;
+}
