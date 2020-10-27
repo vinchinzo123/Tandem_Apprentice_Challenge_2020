@@ -5,6 +5,10 @@ import data from "../Apprentice_TandemFor400_Data.json";
 export const QuestionScreen = () => {
   const questionsNumber = useLocation().pathname.split("/")[2];
   const question = data[questionsNumber].question;
+  const answers = data.map((question) =>
+    question.incorrect.concat(question.correct)
+  );
+  console.log(answers);
   return (
     <div>
       Question number {questionsNumber}
