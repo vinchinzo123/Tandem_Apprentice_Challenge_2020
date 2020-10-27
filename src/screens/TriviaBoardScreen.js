@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
+import { QuestionContext } from "../Store";
 import { Link } from "react-router-dom";
-import data from "../Apprentice_TandemFor400_Data.json";
 
-export const TriviaBoardScreen = ({ randomQuestions }) => {
+export const TriviaBoardScreen = () => {
+  const [questions] = useContext(QuestionContext);
+
   return (
     <div>
-      {randomQuestions.map((num, i) => {
+      {questions.map((question, i) => {
         return (
           <div>
-            <Link to={"/question/" + num}>{data[num].question}</Link>
+            <Link to={"/question/" + i}>{question.question}</Link>
           </div>
         );
       })}

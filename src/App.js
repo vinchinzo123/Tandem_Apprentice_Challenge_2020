@@ -1,6 +1,4 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { StartButton } from "./components/StartButton";
 import { Navigation } from "./components/Navigation";
 
 function App() {

@@ -1,28 +1,42 @@
-import React from "react";
-import { useLocation, Link } from "react-router-dom";
-import data from "../Apprentice_TandemFor400_Data.json";
+import React, { useContext, useEffect } from "react";
+import { QuestionContext, CountContext } from "../Store";
+import { useHistory, useParams } from "react-router-dom";
 
 export const QuestionScreen = () => {
-  const questionsNumber = useLocation().pathname.split("/")[2];
-  const question = data[questionsNumber].question;
-  const answers = data.map((question) =>
-    question.incorrect.concat(question.correct)
+  let { id } = useParams();
+  const [questions] = useContext(QuestionContext);
+  const [count, setCount] = useContext(CountContext);
+  const history = useHistory();
+
+  const question = questions[count - 1].question;
+  const answers = questions[count - 1].incorrect.concat(
+    questions[count - 1].correct
   );
-  console.log(answers);
+
+  useEffect(() => {
+    setCount(id * 1);
+  }, []);
+
+  const handleOnClick = () => {
+    if (count < questions.length) {
+      setCount((count) => count + 1);
+      history.push("/question/" + (count + 1));
+    } else {
+      history.push("/results");
+    }
+  };
+
   return (
     <div>
-      Question number {questionsNumber}
-      <div>Question : {question}</div>
-      {data[questionsNumber].incorrect.map((answer, i) => (
+      Question {count}
+      <div>{question}</div>
+      {answers.map((answer, i) => (
         <div>
-          <Link>
-            {i + 1}. {answer}
-          </Link>
+          <button onClick={handleOnClick}>
+            {i}. {answer}
+          </button>
         </div>
       ))}
-      <div>
-        <Link>4. {data[questionsNumber].correct}</Link>
-      </div>
     </div>
   );
 };
