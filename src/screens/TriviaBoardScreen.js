@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import data from "../Apprentice_TandemFor400_Data.json";
 
-export const TriviaBoardScreen = () => {
-  const [questionNumber, setQuestionNumber] = useState(0);
-  useEffect(() => {
-    setQuestionNumber(() => randomlyGeneratedNumber());
-  }, []);
-  const randomlyGeneratedNumber = () => {
-    return Math.floor(Math.random() * 20);
-  };
-
-  console.log(questionNumber);
-  return <Link to={"/question/" + questionNumber}>GameBoard</Link>;
+export const TriviaBoardScreen = ({ randomQuestions }) => {
+  return (
+    <div>
+      {randomQuestions.map((num, i) => {
+        return (
+          <div>
+            <Link to={"/question/" + num}>{data[num].question}</Link>
+          </div>
+        );
+      })}
+    </div>
+  );
 };
