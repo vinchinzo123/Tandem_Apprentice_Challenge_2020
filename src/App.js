@@ -4,9 +4,9 @@ import { Navigation } from "./components/Navigation";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <div className="trivia-container">
         <Navigation />
-      </header>
+      </div>
     </div>
   );
 }

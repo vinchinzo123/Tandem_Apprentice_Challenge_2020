@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { QuestionContext, CountContext } from "../Store";
 import { useHistory, useParams } from "react-router-dom";
+import { shuffle } from "../function";
 
 export const QuestionScreen = () => {
   let { id } = useParams();
@@ -11,8 +12,8 @@ export const QuestionScreen = () => {
   const history = useHistory();
 
   const question = questions[count - 1].question;
-  const answers = questions[count - 1].incorrect.concat(
-    questions[count - 1].correct
+  const answers = shuffle(
+    questions[count - 1].incorrect.concat(questions[count - 1].correct)
   );
 
   useEffect(() => {
@@ -46,18 +47,20 @@ export const QuestionScreen = () => {
   };
 
   return (
-    <div>
+    <div className="questions">
       {!visible && (
         <div>
           Question {count}
           <div>{question}</div>
-          {answers.map((answer, i) => (
-            <div key={answer}>
-              <button name={answer} onClick={handleOnClick}>
-                {i + 1}. {answer}
-              </button>
-            </div>
-          ))}
+          <div className="answersContainer">
+            {answers.map((answer, i) => (
+              <div className="answers" key={answer}>
+                <button name={answer} onClick={handleOnClick}>
+                  {i + 1}. {answer}
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       )}
       {visible && correct && (
