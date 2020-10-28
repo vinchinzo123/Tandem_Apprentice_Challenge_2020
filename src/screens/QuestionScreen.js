@@ -3,6 +3,7 @@ import { QuestionContext, CountContext } from "../Store";
 import { useHistory, useParams } from "react-router-dom";
 import { shuffle } from "../function";
 import { Button } from "../components/Button";
+import { Timer } from "../components/Timer";
 
 export const QuestionScreen = () => {
   let { id } = useParams();
@@ -52,6 +53,9 @@ export const QuestionScreen = () => {
       {!visible && (
         <div className="flex flex-col">
           <div className="text-center tracking-wide font-bold text-gray-700 mb-3">
+            <div>
+              <Timer setVisibility={setVisibility} />
+            </div>
             Question {count}
           </div>
           <div className="text-center">{question}</div>

@@ -2,6 +2,8 @@ import React, { useState, createContext, useEffect } from "react";
 
 export const QuestionContext = createContext({});
 export const CountContext = createContext(1);
+export const TimeContext = createContext(10);
+export const TimerIDContext = createContext(undefined);
 
 const Store = ({ children }) => {
   const [questions, setQuestions] = useState(
@@ -10,6 +12,9 @@ const Store = ({ children }) => {
 
   const [count, setCount] = useState(1);
 
+  const [time, setTime] = useState(10);
+  const [timerID, setTimerID] = useState(undefined);
+
   useEffect(() => {
     localStorage.setItem("questions", JSON.stringify(questions));
   }, [questions]);
@@ -17,7 +22,11 @@ const Store = ({ children }) => {
   return (
     <QuestionContext.Provider value={[questions, setQuestions]}>
       <CountContext.Provider value={[count, setCount]}>
-        {children}
+        <TimerIDContext.Provider value={[timerID, setTimerID]}>
+          <TimeContext.Provider value={[time, setTime]}>
+            {children}
+          </TimeContext.Provider>
+        </TimerIDContext.Provider>
       </CountContext.Provider>
     </QuestionContext.Provider>
   );
