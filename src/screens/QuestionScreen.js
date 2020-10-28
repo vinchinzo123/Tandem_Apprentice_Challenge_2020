@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { QuestionContext, CountContext } from "../Store";
 import { useHistory, useParams } from "react-router-dom";
+import { shuffle } from "../function";
+import { Button } from "../components/Button";
 
 export const QuestionScreen = () => {
   let { id } = useParams();
@@ -11,8 +13,8 @@ export const QuestionScreen = () => {
   const history = useHistory();
 
   const question = questions[count - 1].question;
-  const answers = questions[count - 1].incorrect.concat(
-    questions[count - 1].correct
+  const answers = shuffle(
+    questions[count - 1].incorrect.concat(questions[count - 1].correct)
   );
 
   useEffect(() => {
@@ -46,42 +48,53 @@ export const QuestionScreen = () => {
   };
 
   return (
-    <div>
+    <div className="questions">
       {!visible && (
-        <div>
-          Question {count}
-          <div>{question}</div>
-          {answers.map((answer, i) => (
-            <div key={answer}>
-              <button name={answer} onClick={handleOnClick}>
-                {i + 1}. {answer}
-              </button>
-            </div>
-          ))}
+        <div className="flex flex-col">
+          <div className="text-center tracking-wide font-bold text-gray-700 mb-3">
+            Question {count}
+          </div>
+          <div className="text-center">{question}</div>
+          <div className="flex py-4 px-6 flex-wrap justify-center ">
+            {answers.map((answer, i) => (
+              <Button
+                key={answer}
+                handleOnClick={handleOnClick}
+                text={answer}
+              />
+            ))}
+          </div>
         </div>
       )}
       {visible && correct && (
-        <div className="wrongAnswer">
-          <div style={{ color: "green" }}>Great!!</div>
-          <div style={{ color: "green" }}>
-            <strong style={{ color: "green" }}>
+        <div className=" flex flex-col">
+          <div className=" text-green-700 text-center">Great!!</div>
+          <div className=" text-green-700 text-center">
+            <strong className=" text-green-700 font-bold text-center">
               {questions[count - 1].correct}{" "}
             </strong>
             is the correct answer!
           </div>
-          <button onClick={nextQuestionClick}>Next question</button>
+          <div className="flex justify-center">
+            <Button handleOnClick={nextQuestionClick} text={"Next Question"} />
+          </div>
         </div>
       )}{" "}
       {visible && !correct && (
-        <div className="wrongAnswer">
-          <div>Wrong!</div>
-          <div>
-            Correct answer is{" "}
-            <strong style={{ color: "green" }}>
+        <div className="flex flex-col">
+          <div className="text-red-700 text-center">Wrong!</div>
+          <div className="text-red-700 text-center">
+            The correct answer is{" "}
+            <strong className="text-red-700 text-center font-bold">
               {questions[count - 1].correct}
             </strong>
           </div>
-          <button onClick={nextQuestionClick}>Next question</button>
+          <div className="flex justify-center">
+            <Button
+              handleOnClick={nextQuestionClick}
+              text={count === 10 ? "View Results" : "Next question"}
+            />
+          </div>
         </div>
       )}
     </div>
