@@ -81,7 +81,9 @@ export const QuestionScreen = () => {
               {questions[count - 1].correct}
             </strong>
           </div>
-          <button onClick={nextQuestionClick}>Next question</button>
+          <button onClick={nextQuestionClick}>
+            {count === 10 ? "View Results" : "Next question"}
+          </button>
         </div>
       )}
     </div>
