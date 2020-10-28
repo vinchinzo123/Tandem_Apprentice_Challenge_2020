@@ -1,4 +1,4 @@
-/* .App {
+/* /* .App {
   text-align: center;
 }
 
@@ -26,7 +26,7 @@
   }
 } */
 
-.App {
+/* .App {
   text-align: center;
   width: 100vw;
   height: 100vh;
@@ -46,16 +46,16 @@
 }
 
 .trivia-container {
-  background-color: rgba(240, 239, 238, 0.822);
-  border-radius: 50px;
+  /* background-color: rgba(240, 239, 238, 0.822); */
+/* border-radius: 50px;
   box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 300px auto;
   width: 35%;
-  padding: 15px;
-}
+  padding: 15px; */
+/* }
 .answersContainer {
   margin: 10px;
   display: flex;
@@ -67,4 +67,4 @@
 .answers {
   flex-grow: 1;
   width: 50%;
-}
+} */

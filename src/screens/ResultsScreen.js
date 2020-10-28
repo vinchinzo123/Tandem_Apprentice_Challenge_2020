@@ -9,18 +9,16 @@ export const ResultsScreen = () => {
     .length;
   return (
     <div>
-      {score === 10 ? (
-        <div>Perfect score!</div>
-      ) : score > 7 ? (
-        <div>Keep it up almost there</div>
-      ) : (
-        <div>Better Luck Next time</div>
-      )}
-      <div>
-        {score} out of {questions.length}{" "}
+      <div className="text-center">
+        {score === 10
+          ? "Perfect score!"
+          : score > 7
+          ? "Keep it up almost there"
+          : "Better Luck Next time"}
       </div>
-
-      <StartButton message={"Play Again?"} />
+      <div className="flex justify-center">
+        <StartButton message={"Play Again?"} />
+      </div>
     </div>
   );
 };

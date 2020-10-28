@@ -3,9 +3,8 @@ import { StartButton } from "../components/StartButton";
 
 export const LandingScreen = () => {
   return (
-    <>
-      <p>Tandem Trivia!</p>
+    <div className="flex justify-center items-center h-32">
       <StartButton />
-    </>
+    </div>
   );
 };
