@@ -9,7 +9,10 @@ function App() {
           tandem trivia
         </p>
       </div>
-      <div className="container rounded-lg mx-auto shadow-2xl bg-white font-light max-w-lg text-gray-700 p-4 h-46">
+      <div
+        style={{ minHeight: "13rem" }}
+        className="container rounded-lg mx-auto shadow-2xl bg-white font-light max-w-lg text-gray-700 p-4 h-46"
+      >
         <Navigation />
       </div>
     </div>

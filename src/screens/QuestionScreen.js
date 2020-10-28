@@ -67,7 +67,7 @@ export const QuestionScreen = () => {
         </div>
       )}
       {visible && correct && (
-        <div className=" flex flex-col">
+        <div className=" flex flex-col pt-4 space-y-1  ">
           <div className=" text-green-700 text-center">Great!!</div>
           <div className=" text-green-700 text-center">
             <strong className=" text-green-700 font-bold text-center">
@@ -76,12 +76,16 @@ export const QuestionScreen = () => {
             is the correct answer!
           </div>
           <div className="flex justify-center">
-            <Button handleOnClick={nextQuestionClick} text={"Next Question"} />
+            <Button
+              className="hover:bg-gray-700"
+              handleOnClick={nextQuestionClick}
+              text={"Next Question"}
+            />
           </div>
         </div>
       )}{" "}
       {visible && !correct && (
-        <div className="flex flex-col">
+        <div className="flex flex-col pt-4 space-y-1">
           <div className="text-red-700 text-center">Wrong!</div>
           <div className="text-red-700 text-center">
             The correct answer is{" "}
