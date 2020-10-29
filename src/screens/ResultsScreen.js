@@ -25,7 +25,9 @@ export const ResultsScreen = () => {
           : `Don't quit your dayjob...`}
       </div>
       <div className="text-center">
-        {score} out of {questions.length} questions correct
+        <span className="font-semibold">{score}</span> out of{" "}
+        <span className="font-semibold">{questions.length}</span> questions
+        correct
       </div>
       <div className="flex justify-center">
         <StartButton message={"Play Again?"} />
