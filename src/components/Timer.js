@@ -1,13 +1,13 @@
 import React, { useEffect, useContext, useState } from "react";
-import { TimeContext, TimerIDContext } from "../Store";
+import { TimerIDContext } from "../Store";
 
 export const Timer = ({ setVisibility }) => {
   const [time, setTime] = useState(30);
-  const [color, setColor] = useState("black");
   const [timerID, setTimerID] = useContext(TimerIDContext);
   useEffect(() => {
     setTimerID(() => setInterval(() => startTimer(), 1010));
-    // return () => clearInterval(timerID);
+    return () => clearInterval(timerID);
+    // eslint-disable-next-line
   }, []);
 
   const startTimer = async () => {

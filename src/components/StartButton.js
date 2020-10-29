@@ -12,7 +12,7 @@ export const StartButton = ({ message }) => {
 
   useEffect(() => {
     setCount(() => 1);
-  }, []);
+  });
 
   const handleOnClick = () => {
     setQuestions(() => {
