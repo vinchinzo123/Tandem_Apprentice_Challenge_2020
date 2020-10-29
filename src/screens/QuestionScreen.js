@@ -6,11 +6,12 @@ import { Button } from "../components/Button";
 import { Timer } from "../components/Timer";
 
 export const QuestionScreen = () => {
-  let { id } = useParams();
   const [questions, setQuestions] = useContext(QuestionContext);
   const [count, setCount] = useContext(CountContext);
   const [visible, setVisibility] = useState(false);
+  const [timesUp, setTimesUp] = useState(false);
   const [correct, setCorrectness] = useState(false);
+  let { id } = useParams();
   const history = useHistory();
 
   const question = questions[count - 1].question;
@@ -20,6 +21,16 @@ export const QuestionScreen = () => {
 
   useEffect(() => {
     setCount(id * 1);
+    if (!timesUp && !visible) {
+      const timeout = setTimeout(() => {
+        setTimesUp((timesUp) => {
+          setVisibility(() => true);
+          return !timesUp;
+        });
+      }, 5000);
+
+      return () => clearTimeout(timeout);
+    }
   });
 
   const handleOnClick = (e) => {
@@ -39,6 +50,7 @@ export const QuestionScreen = () => {
 
   const nextQuestionClick = () => {
     setVisibility((visible) => !visible);
+    setTimesUp(() => false);
     setCorrectness(() => false);
     if (count < questions.length) {
       setCount((count) => count + 1);
@@ -53,8 +65,8 @@ export const QuestionScreen = () => {
       {!visible && (
         <div className="flex flex-col">
           <div className="text-center tracking-wide font-bold text-gray-700 mb-3">
-            <div>
-              <Timer setVisibility={setVisibility} />
+            <div className="findme" onChange={(e) => console.log(e)}>
+              <Timer />
             </div>
             Question {count}
           </div>
@@ -92,7 +104,7 @@ export const QuestionScreen = () => {
       {visible && !correct && (
         <div className="flex flex-col pt-4 space-y-1">
           <div className="text-red-700 text-2xl font-semibold  text-center">
-            Wrong!
+            {timesUp ? "Times up!" : "Wrong!"}
           </div>
           <div className="text-gray-700 text-center">
             The correct answer is{" "}

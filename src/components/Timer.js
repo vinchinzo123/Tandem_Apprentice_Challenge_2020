@@ -1,22 +1,21 @@
-import React, { useEffect, useContext, useState } from "react";
-import { TimerIDContext } from "../Store";
+import React, { useEffect, useState } from "react";
 
-export const Timer = ({ setVisibility }) => {
+export const Timer = () => {
   const [time, setTime] = useState(30);
-  const [timerID, setTimerID] = useContext(TimerIDContext);
+
   useEffect(() => {
-    setTimerID(() => setInterval(() => startTimer(), 1010));
-    return () => clearInterval(timerID);
+    const startTimer = () => {
+      setTime((time) => {
+        if (time > 0) {
+          return time - 1;
+        }
+      });
+    };
+    let tID = setInterval(() => startTimer(), 1000);
+    return () => clearInterval(tID);
     // eslint-disable-next-line
   }, []);
 
-  const startTimer = async () => {
-    setTime((time) => time - 1);
-  };
-  if (time === -1) {
-    clearInterval(timerID);
-    setVisibility(() => true);
-  }
   return (
     <div>
       {time < 6 ? (
