@@ -3,6 +3,7 @@ import { QuestionContext, CountContext } from "../Store";
 import { useHistory, useParams } from "react-router-dom";
 import { shuffle } from "../function";
 import { Button } from "../components/Button";
+import { Timer } from "../components/Timer";
 
 export const QuestionScreen = () => {
   let { id } = useParams();
@@ -52,6 +53,9 @@ export const QuestionScreen = () => {
       {!visible && (
         <div className="flex flex-col">
           <div className="text-center tracking-wide font-bold text-gray-700 mb-3">
+            <div>
+              <Timer setVisibility={setVisibility} />
+            </div>
             Question {count}
           </div>
           <div className="text-center">{question}</div>
@@ -68,8 +72,10 @@ export const QuestionScreen = () => {
       )}
       {visible && correct && (
         <div className=" flex flex-col pt-4 space-y-1  ">
-          <div className=" text-green-700 text-center">Great!!</div>
-          <div className=" text-green-700 text-center">
+          <div className=" text-green-700 text-2xl font-semibold text-center">
+            Great!!!
+          </div>
+          <div className=" text-gray-700 text-center">
             <strong className=" text-green-700 font-bold text-center">
               {questions[count - 1].correct}{" "}
             </strong>
@@ -77,17 +83,18 @@ export const QuestionScreen = () => {
           </div>
           <div className="flex justify-center">
             <Button
-              className="hover:bg-gray-700"
               handleOnClick={nextQuestionClick}
-              text={"Next Question"}
+              text={count === 10 ? "View Results" : "Next question"}
             />
           </div>
         </div>
       )}{" "}
       {visible && !correct && (
         <div className="flex flex-col pt-4 space-y-1">
-          <div className="text-red-700 text-center">Wrong!</div>
-          <div className="text-red-700 text-center">
+          <div className="text-red-700 text-2xl font-semibold  text-center">
+            Wrong!
+          </div>
+          <div className="text-gray-700 text-center">
             The correct answer is{" "}
             <strong className="text-red-700 text-center font-bold">
               {questions[count - 1].correct}
