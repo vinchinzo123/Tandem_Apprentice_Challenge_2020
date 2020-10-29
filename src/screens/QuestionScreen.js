@@ -20,11 +20,11 @@ export const QuestionScreen = () => {
 
   useEffect(() => {
     setCount(id * 1);
-  }, []);
+  });
 
   const handleOnClick = (e) => {
     let selectedAnswer = e.target.name;
-    if (selectedAnswer == questions[count - 1].correct) {
+    if (selectedAnswer === questions[count - 1].correct) {
       setCorrectness(() => true);
       setQuestions((questions) =>
         questions.map((question) =>

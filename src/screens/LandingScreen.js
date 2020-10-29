@@ -1,6 +1,5 @@
 import React from "react";
 import { StartButton } from "../components/StartButton";
-import { Timer } from "../components/Timer";
 
 export const LandingScreen = () => {
   return (

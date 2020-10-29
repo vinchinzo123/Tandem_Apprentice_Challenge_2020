@@ -5,7 +5,7 @@ import { QuestionContext } from "../Store";
 
 export const ResultsScreen = () => {
   const [questions] = useContext(QuestionContext);
-  const score = questions.filter((question) => question.gotRight == true)
+  const score = questions.filter((question) => question.gotRight === true)
     .length;
   return (
     <div className="flex flex-col pt-6 space-y-2">
