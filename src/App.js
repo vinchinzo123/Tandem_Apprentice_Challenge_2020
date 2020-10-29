@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-200 p-10">
       <div className="mb-4">
-        <p className=" text-center text-orange-500 font-light tracking-widest text-5xl">
+        <p className=" text-center text-orange-500 font-light leading-none tracking-widest mb-10 text-5xl">
           tandem trivia
         </p>
       </div>

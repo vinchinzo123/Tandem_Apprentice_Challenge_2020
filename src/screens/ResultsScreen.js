@@ -12,9 +12,17 @@ export const ResultsScreen = () => {
       <div className="text-center">
         {score === 10
           ? "Perfect score!"
-          : score > 7
-          ? "Keep it up almost there"
-          : "Better Luck Next time"}
+          : score > 9
+          ? "Just one away!"
+          : score > 8
+          ? "Keep it up almost there!"
+          : score > 5
+          ? "Better luck next time!"
+          : score > 3
+          ? "Study harder.."
+          : score > 1
+          ? "Were you even trying..."
+          : `Don't quit your dayjob...`}
       </div>
       <div className="text-center">
         {score} out of {questions.length} questions correct
