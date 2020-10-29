@@ -8,7 +8,7 @@ export const LandingScreen = () => {
       <div className="text-center">
         Do you have what it takes to get a perfect score?
       </div>
-      <div className="text-center">You have 60 seconds per question!</div>
+      <div className="text-center">You have 30 seconds per question!</div>
       <div className="text-center">Good Luck!</div>
       <StartButton />
     </div>
