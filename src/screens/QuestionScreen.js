@@ -27,7 +27,7 @@ export const QuestionScreen = () => {
           setVisibility(() => true);
           return !timesUp;
         });
-      }, 5000);
+      }, 30000);
 
       return () => clearTimeout(timeout);
     }
