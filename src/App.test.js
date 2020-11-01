@@ -2,10 +2,9 @@ import { Header } from "./components/Header";
 import { Button } from "./components/Button";
 import { Timer } from "./components/Timer";
 import { StartButton } from "./components/StartButton";
-import { QuestionContext, CountContext } from "./Store";
+import Store from "./Store";
 import { unmountComponentAtNode, render } from "react-dom";
 import { act } from "react-dom/test-utils";
-import data from "./Apprentice_TandemFor400_Data.json";
 
 let container = null;
 beforeEach(() => {
@@ -38,18 +37,10 @@ it("renders Button with properly passed props", () => {
 
 test("renders StartButton with out props", () => {
   act(() => {
-    let questions = data;
-    let count = 1;
-    const setCount = () => {
-      count = count + 1;
-    };
-
     render(
-      <QuestionContext.Provider value={[questions]}>
-        <CountContext.Provider value={[count, setCount]}>
-          <StartButton />
-        </CountContext.Provider>
-      </QuestionContext.Provider>,
+      <Store>
+        <StartButton />
+      </Store>,
       container
     );
   });
@@ -58,18 +49,10 @@ test("renders StartButton with out props", () => {
 
 test("renders StartButton with message prop", () => {
   act(() => {
-    let questions = data;
-    let count = 1;
-    const setCount = () => {
-      count = count + 1;
-    };
-
     render(
-      <QuestionContext.Provider value={[questions]}>
-        <CountContext.Provider value={[count, setCount]}>
-          <StartButton message="Don't play trivia" />
-        </CountContext.Provider>
-      </QuestionContext.Provider>,
+      <Store>
+        <StartButton message={"Don't play trivia"} />
+      </Store>,
       container
     );
   });

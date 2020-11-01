@@ -1,12 +1,12 @@
 import React from "react";
 import { StartButton } from "../components/StartButton";
 import { useContext } from "react";
-import { QuestionContext } from "../Store";
+import { GameContext } from "../Store";
 
 export const ResultsScreen = () => {
-  const [questions] = useContext(QuestionContext);
-  const score = questions.filter((question) => question.gotRight === true)
-    .length;
+  const [{ questions }] = useContext(GameContext);
+  const score = questions.filter((question) => question.gotRight).length;
+
   return (
     <div className="flex flex-col pt-6 space-y-2">
       <div className="text-center">

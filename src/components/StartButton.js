@@ -1,24 +1,22 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { CountContext, QuestionContext } from "../Store";
+import { GameContext } from "../Store";
 import { fillArrayWith10Questions } from "../function";
 import data from "../Apprentice_TandemFor400_Data.json";
 import { Button } from "../components/Button";
 
 export const StartButton = ({ message }) => {
-  const [, setQuestions] = useContext(QuestionContext);
-  const [count, setCount] = useContext(CountContext);
+  const [, setGameState] = useContext(GameContext);
+
   const history = useHistory();
 
-  useEffect(() => {
-    setCount(() => 1);
-  });
-
   const handleOnClick = () => {
-    setQuestions(() => {
-      return fillArrayWith10Questions(data);
-    });
-    history.push("/question/" + count);
+    setGameState((gameState) => ({
+      ...gameState,
+      questions: fillArrayWith10Questions(data),
+      count: 1,
+    }));
+    history.push("/question/" + 1);
   };
   return (
     <Button
