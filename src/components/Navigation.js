@@ -1,7 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import {
-  TriviaBoardScreen,
   LandingScreen,
   QuestionScreen,
   ErrorScreen,
@@ -11,7 +10,6 @@ import {
 export const Navigation = () => {
   return (
     <Switch>
-      <Route path="/trivia-board" component={TriviaBoardScreen} />
       <Route path="/question/:id" component={QuestionScreen} />
       <Route path="/results" component={ResultsScreen} />
       <Route exact path="/" component={LandingScreen} />

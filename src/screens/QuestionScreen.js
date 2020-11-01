@@ -1,26 +1,43 @@
 import React, { useContext, useEffect, useState } from "react";
-import { QuestionContext, CountContext } from "../Store";
+import { GameContext } from "../Store";
 import { useHistory, useParams } from "react-router-dom";
 import { shuffle } from "../function";
 import { Button } from "../components/Button";
 import { Timer } from "../components/Timer";
 
 export const QuestionScreen = () => {
-  const [questions, setQuestions] = useContext(QuestionContext);
-  const [count, setCount] = useContext(CountContext);
+  //
+  const [{ questions, count }, setGameState] = useContext(GameContext);
+  const currentQuestion = questions[count - 1];
+  const shuffledAnswers = shuffle(
+    currentQuestion.incorrect.concat(currentQuestion.correct)
+  );
+
   const [visible, setVisibility] = useState(false);
   const [timesUp, setTimesUp] = useState(false);
-  const [correct, setCorrectness] = useState(false);
   let { id } = useParams();
   const history = useHistory();
 
-  const question = questions[count - 1].question;
-  const answers = shuffle(
-    questions[count - 1].incorrect.concat(questions[count - 1].correct)
-  );
+  useEffect(() => {
+    if (id > questions.length) {
+      history.push("/");
+    } else if (questions[Number.parseInt(id) - 1].completed === true) {
+      if (count + 1 > questions.length) {
+        history.push("/results");
+      } else {
+        history.push("/question/" + (Number.parseInt(id) + 1));
+      }
+      setGameState((gameState) => ({
+        ...gameState,
+        count: Number.parseInt(id) + 1,
+      }));
+      setVisibility(() => false);
+      setTimesUp(() => false);
+    }
+    // eslint-disable-next-line
+  }, [id]);
 
   useEffect(() => {
-    setCount(id * 1);
     if (!timesUp && !visible) {
       const timeout = setTimeout(() => {
         setTimesUp((timesUp) => {
@@ -35,25 +52,33 @@ export const QuestionScreen = () => {
 
   const handleOnClick = (e) => {
     let selectedAnswer = e.target.name;
-    if (selectedAnswer === questions[count - 1].correct) {
-      setCorrectness(() => true);
-      setQuestions((questions) =>
-        questions.map((question) =>
+    if (selectedAnswer === currentQuestion.correct) {
+      setGameState((gameState) => ({
+        ...gameState,
+        questions: gameState.questions.map((question) =>
           question.correct === selectedAnswer
             ? { ...question, gotRight: true }
             : { ...question }
-        )
-      );
+        ),
+      }));
     }
+    setGameState((gameState) => ({
+      ...gameState,
+      questions: gameState.questions.map((question, i) =>
+        count - 1 === i ? { ...question, completed: true } : { ...question }
+      ),
+    }));
     setVisibility((visible) => !visible);
   };
 
   const nextQuestionClick = () => {
     setVisibility((visible) => !visible);
     setTimesUp(() => false);
-    setCorrectness(() => false);
     if (count < questions.length) {
-      setCount((count) => count + 1);
+      setGameState((gameState) => ({
+        ...gameState,
+        count: gameState.count + 1,
+      }));
       history.push("/question/" + (count + 1));
     } else {
       history.push("/results");
@@ -65,14 +90,12 @@ export const QuestionScreen = () => {
       {!visible && (
         <div className="flex flex-col">
           <div className="text-center tracking-wide font-bold text-gray-700 mb-3">
-            <div className="findme" onChange={(e) => console.log(e)}>
-              <Timer />
-            </div>
+            <Timer />
             Question {count}
           </div>
-          <div className="text-center">{question}</div>
+          <div className="text-center">{currentQuestion.question}</div>
           <div className="flex py-4 px-6 flex-wrap justify-center ">
-            {answers.map((answer, i) => (
+            {shuffledAnswers.map((answer) => (
               <Button
                 key={answer}
                 handleOnClick={handleOnClick}
@@ -82,14 +105,14 @@ export const QuestionScreen = () => {
           </div>
         </div>
       )}
-      {visible && correct && (
+      {visible && currentQuestion.gotRight && (
         <div className=" flex flex-col pt-4 space-y-1  ">
           <div className=" text-green-700 text-2xl font-semibold text-center">
             Great!!!
           </div>
           <div className=" text-gray-700 text-center">
             <strong className=" text-green-700 font-bold text-center">
-              {questions[count - 1].correct}{" "}
+              {currentQuestion.correct}{" "}
             </strong>
             is the correct answer!
           </div>
@@ -101,7 +124,7 @@ export const QuestionScreen = () => {
           </div>
         </div>
       )}{" "}
-      {visible && !correct && (
+      {visible && !currentQuestion.gotRight && (
         <div className="flex flex-col pt-4 space-y-1">
           <div className="text-red-700 text-2xl font-semibold  text-center">
             {timesUp ? "Times up!" : "Wrong!"}
@@ -109,7 +132,7 @@ export const QuestionScreen = () => {
           <div className="text-gray-700 text-center">
             The correct answer is{" "}
             <strong className="text-red-700 text-center font-bold">
-              {questions[count - 1].correct}
+              {currentQuestion.correct}
             </strong>
           </div>
           <div className="flex justify-center">

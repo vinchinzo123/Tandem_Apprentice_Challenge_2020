@@ -1,27 +1,30 @@
 import React, { useState, createContext, useEffect } from "react";
 
-export const QuestionContext = createContext({});
-export const CountContext = createContext(1);
+export const GameContext = createContext({
+  questions: [],
+  count: 1,
+});
 
 const Store = ({ children }) => {
-  const [questions, setQuestions] = useState(
-    JSON.parse(localStorage.getItem("questions")) || {}
-  );
-
-  const [count, setCount] = useState(1);
+  const [gameState, setGameState] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("gameState"));
+    } catch {
+      return {
+        questions: [],
+        count: 1,
+      };
+    }
+  });
 
   useEffect(() => {
-    localStorage.setItem("questions", JSON.stringify(questions));
-  }, [questions]);
+    localStorage.setItem("gameState", JSON.stringify(gameState));
+  }, [gameState]);
 
   return (
-    <QuestionContext.Provider value={[questions, setQuestions]}>
-      <CountContext.Provider value={[count, setCount]}>
-        {/* <TimeContext.Provider value={[time, setTime]}> */}
-        {children}
-        {/* </TimeContext.Provider> */}
-      </CountContext.Provider>
-    </QuestionContext.Provider>
+    <GameContext.Provider value={[gameState, setGameState]}>
+      {children}
+    </GameContext.Provider>
   );
 };
 
