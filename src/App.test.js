@@ -82,10 +82,10 @@ test("time component counts down each for 30 seconds to 0", () => {
   expect(container.textContent).toBe("0");
 });
 
-test("time component is null at and after 31 seconds", () => {
+test("time component is 0 at and after 31 seconds", () => {
   act(() => {
     render(<Timer />, container);
     jest.advanceTimersByTime(31000);
   });
-  expect(container.textContent).toBeFalsy();
+  expect(container.textContent).toBe("0");
 });
