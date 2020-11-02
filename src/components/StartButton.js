@@ -17,6 +17,7 @@ export const StartButton = ({ message }) => {
       count: 1,
     }));
     history.push("/question/" + 1);
+    localStorage.removeItem("time");
   };
   return (
     <Button
